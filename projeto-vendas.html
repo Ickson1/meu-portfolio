@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudo de Caso | Dashboard de Vendas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .case-study-header {
+            padding: 100px 0 50px;
+            background: var(--bg-light);
+            text-align: center;
+        }
+        .case-content {
+            padding: 50px 0;
+        }
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+            align-items: start;
+        }
+        .case-image {
+            background: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .case-image:hover {
+            transform: scale(1.02);
+        }
+        .case-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+        }
+        .insight-card {
+            background: var(--primary-color);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            .case-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header id="header" class="scrolled">
+        <nav class="container">
+            <div class="logo">
+                <a href="index.html"><span class="code-tag">&lt;</span>Voltar ao Portfólio<span class="code-tag">/&gt;</span></a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="case-study-header">
+        <div class="container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Voltar</a>
+            <h1>Dashboard de Performance de Vendas</h1>
+            <p class="subheadline">Análise estratégica de faturamento e comportamento de churn utilizando Python e SQL.</p>
+        </div>
+    </section>
+
+    <main class="case-content">
+        <div class="container">
+            <!-- Contexto -->
+            <div class="case-grid">
+                <div>
+                    <h2>O Desafio</h2>
+                    <p>Uma empresa de SaaS estava enfrentando dificuldades para centralizar seus dados de vendas e entender quais planos eram mais rentáveis. Além disso, a taxa de cancelamento (churn) não era monitorada de forma sistemática, impedindo ações preventivas.</p>
+                    <h2 style="margin-top: 30px;">A Solução</h2>
+                    <p>Desenvolvi um pipeline de dados que extrai informações de um banco SQL, realiza o tratamento de dados com Pandas e gera visualizações automáticas. O foco foi criar métricas claras para a diretoria comercial.</p>
+                </div>
+                <div class="case-image">
+                    <img src="assets/img/evolucao_faturamento.png" alt="Gráfico de Evolução Mensal do Faturamento">
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 10px; text-align: center;">Visualização da tendência de faturamento ao longo do tempo.</p>
+                </div>
+            </div>
+
+            <!-- Resultados -->
+            <div class="case-grid">
+                <div class="case-image">
+                    <img src="assets/img/faturamento_plano.png" alt="Gráfico de Faturamento por Plano">
+                    <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 10px; text-align: center;">Comparativo de receita entre os planos Básico, Premium e Enterprise.</p>
+                </div>
+                <div>
+                    <h2>Principais Insights</h2>
+                    <ul class="tech-list">
+                        <li><strong>Dominância do Plano Enterprise:</strong> Apesar de possuir menos clientes, o plano Enterprise é responsável por 45% da receita total.</li>
+                        <li><strong>Alerta de Churn:</strong> Identificamos que 12% das vendas iniciadas são canceladas, com maior incidência no plano Básico.</li>
+                        <li><strong>Ticket Médio:</strong> O valor médio por venda estabilizou em R$ 280,00, permitindo previsibilidade de caixa.</li>
+                    </ul>
+                    <div class="insight-card">
+                        <h3><i class="fas fa-lightbulb"></i> Recomendação Estratégica</h3>
+                        <p>Focar esforços de retenção no plano Enterprise e revisar o processo de onboarding do plano Básico para reduzir o churn precoce.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="https://github.com/seu-usuario/projeto-dashboard-vendas" target="_blank" class="btn btn-primary">Ver Código Completo no GitHub</a>
+            </div>
+        </div>
+    </main>
+
+    <footer style="margin-top: 100px;">
+        <div class="container">
+            <p>&copy; 2026 | Estudo de Caso de Analista de Dados</p>
+        </div>
+    </footer>
+</body>
+</html>
