@@ -22,18 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (mobileMenuBtn) {
         mobileMenuBtn.addEventListener('click', () => {
-            // Simples toggle para demonstração. 
-            // Em um projeto real, adicionaríamos classes CSS para o menu lateral.
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '80px';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.background = 'white';
-                navLinks.style.padding = '2rem';
-                navLinks.style.boxShadow = '0 10px 15px -3px rgba(0,0,0,0.1)';
+            navLinks.classList.toggle('active');
+            // Muda o ícone entre barras e X
+            const icon = mobileMenuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
             }
         });
     }
@@ -49,12 +46,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 // Fecha menu mobile se estiver aberto
-                if (window.innerWidth <= 768) {
-                    navLinks.style.display = 'none';
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                if (icon) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
                 }
 
                 window.scrollTo({
-                    top: targetElement.offsetTop - 70, // Offset para o header fixo
+                    top: targetElement.offsetTop - 60, // Offset para o header fixo
                     behavior: 'smooth'
                 });
             }
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     // Aplica animação inicial em seções e cards
-    const animateElements = document.querySelectorAll('.section-title, .project-card, .about-text, .stat-card');
+    const animateElements = document.querySelectorAll('.section-title, .project-card, .about-text, .stat-card, .tech-category');
     animateElements.forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
@@ -85,5 +85,5 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    console.log('Portfólio carregado com sucesso!');
+    console.log('Portfólio responsivo carregado com sucesso!');
 });
