@@ -16,6 +16,61 @@
     
     <!-- CSS Customizado -->
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Estilos para o Modal da Demo */
+        .demo-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: 2% auto;
+            padding: 0;
+            width: 90%;
+            max-width: 1100px;
+            height: 85vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            padding: 15px 25px;
+            background: #1a1a1a;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-modal {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover { color: #fff; }
+
+        iframe {
+            width: 100%;
+            height: calc(100% - 60px);
+            border: none;
+        }
+
+        body.modal-open { overflow: hidden; }
+    </style>
 </head>
 <body>
     <!-- Header / Navegação -->
@@ -52,7 +107,6 @@
                             <span>JavaScript</span>
                             <span>Power BI</span>
                             <span>Automação</span>
-                            <!-- Duplicando para o efeito infinito -->
                             <span>Python</span>
                             <span>SQL</span>
                             <span>Flask</span>
@@ -80,7 +134,6 @@
                     <div class="about-text">
                         <p>Olá! Sou um <strong>Analista de Dados e Desenvolvedor</strong> focado em unir o poder da análise estatística com a eficiência do desenvolvimento de software. Com mais de 3 anos de experiência, minha missão é transformar grandes volumes de informação em insights acionáveis e criar ferramentas que automatizam e otimizam processos de negócio.</p>
                         <p>Minha experiência envolve o uso intensivo de <strong>Python</strong> e <strong>SQL</strong> para extração e análise de dados, além do desenvolvimento de aplicações web com <strong>Flask</strong>. Acredito que a automação é a chave para a eficiência, por isso transito entre a análise técnica e a construção de sistemas que facilitam o dia a dia corporativo.</p>
-                        <p>Além da parte técnica, busco sempre alinhar as soluções aos objetivos de negócio, garantindo que cada dashboard ou aplicação contribua diretamente para a tomada de decisão estratégica e produtividade da equipe.</p>
                     </div>
                     <div class="about-stats">
                         <div class="stat-card">
@@ -115,7 +168,8 @@
                             </div>
                             <div class="project-links">
                                 <a href="https://github.com/Ickson1/HelpDesk" target="_blank" class="link-icon"><i class="fab fa-github"></i> GitHub</a>
-                                <a href="#" class="link-icon"><i class="fas fa-external-link-alt"></i> Demo</a>
+                                <!-- Link para a Demo Interativa -->
+                                <a href="javascript:void(0)" onclick="openDemo()" class="link-icon"><i class="fas fa-desktop"></i> Demo Interativa</a>
                             </div>
                         </div>
                     </article>
@@ -207,10 +261,6 @@
                                 <i class="fab fa-linkedin"></i>
                                 <span>linkedin.com/in/ickson-matheus</span>
                             </a>
-                            <a href="https://github.com/Ickson1" target="_blank" class="contact-item">
-                                <i class="fab fa-github"></i>
-                                <span>github.com/Ickson1</span>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -218,13 +268,43 @@
         </section>
     </main>
 
+    <!-- Modal para a Demo -->
+    <div id="demoModal" class="demo-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span><i class="fas fa-terminal"></i> Demo: HelpDesk Tráfego</span>
+                <span class="close-modal" onclick="closeDemo()">&times;</span>
+            </div>
+            <iframe src="helpdesk-demo.html" id="demoIframe"></iframe>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
             <p>&copy; 2026 | Desenvolvido por Ickson Silva - Dados & Desenvolvimento</p>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript para o Modal -->
+    <script>
+        function openDemo() {
+            document.getElementById('demoModal').style.display = 'block';
+            document.body.classList.add('modal-open');
+        }
+
+        function closeDemo() {
+            document.getElementById('demoModal').style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }
+
+        // Fechar ao clicar fora do modal
+        window.onclick = function(event) {
+            let modal = document.getElementById('demoModal');
+            if (event.target == modal) {
+                closeDemo();
+            }
+        }
+    </script>
     <script src="js/main.js"></script>
 </body>
 </html>
