@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Interativa | HelpDesk Tráfego</title>
+    <!-- Reutilizando estilos do projeto original para fidelidade -->
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #4a4a4a;
+            --background-light: #f8f9fa;
+            --background-white: #ffffff;
+            --border-color: #dee2e6;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --error-color: #dc3545;
+            --priority-low-color: #28a745;
+            --priority-medium-color: #ffc107;
+            --priority-high-color: #dc3545;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background-color: var(--background-light); color: #343a40; padding-top: 70px; }
+
+        header {
+            background-color: var(--background-white);
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        header h1 { font-size: 1.5em; font-weight: 700; }
+        
+        nav a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            margin-left: 15px;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: 0.3s;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        nav a:hover, nav a.active { color: var(--primary-color); background-color: rgba(0, 123, 255, 0.05); }
+
+        main { max-width: 1000px; margin: 1.5rem auto; padding: 1.5rem; background-color: var(--background-white); border-radius: 8px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.07); min-height: 500px; }
+        
+        h2 { color: var(--primary-color); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.3em; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #495057; font-size: 0.9em; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; font-size: 0.95em; }
+        button { background-color: var(--primary-color); color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; transition: 0.3s; width: 100%; }
+        button:hover { background-color: #0056b3; }
+
+        .chamado-card { border: 1px solid var(--border-color); border-left: 4px solid var(--primary-color); padding: 15px; border-radius: 6px; margin-bottom: 15px; background: white; transition: 0.3s; position: relative; }
+        .chamado-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .card-header { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; margin-bottom: 8px; }
+        .status-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: 700; text-transform: uppercase; }
+        .status-aberto { background: var(--primary-color); color: white; }
+        .status-andamento { background: var(--warning-color); color: #333; }
+        .status-fechado { background: var(--success-color); color: white; }
+
+        .demo-notice { background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 20px; font-size: 0.85em; border: 1px solid #ffeeba; text-align: center; }
+        
+        .hidden { display: none; }
+        
+        /* Grid para o form */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .full-width { grid-column: span 2; }
+
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } .full-width { grid-column: span 1; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>HelpDesk <span style="color: #666; font-weight: 400; font-size: 0.8em;">(Demo Mode)</span></h1>
+            <nav>
+                <a onclick="showSection('novo')" id="nav-novo" class="active">Abrir Chamado</a>
+                <a onclick="showSection('lista')" id="nav-lista">Ver Chamados</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="demo-notice">
+            <strong>Modo de Demonstração:</strong> Esta é uma simulação interativa rodando inteiramente no seu navegador. Os dados são salvos temporariamente na sessão.
+        </div>
+
+        <!-- Seção: Novo Chamado -->
+        <section id="section-novo">
+            <h2>Abrir Novo Chamado</h2>
+            <form id="demo-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nome:</label>
+                        <input type="text" id="nome" value="Visitante Demo" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="email" value="demo@exemplo.com" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Solicitação:</label>
+                        <select id="departamento" required>
+                            <option value="Manutenção">Manutenção</option>
+                            <option value="Acessos">Acessos</option>
+                            <option value="Outros">Outros</option>
+                            <option value="Log">Análise de Log</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Prioridade:</label>
+                        <select id="prioridade" required>
+                            <option value="Baixa">Baixa</option>
+                            <option value="Média" selected>Média</option>
+                            <option value="Alta">Alta</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Título:</label>
+                        <input type="text" id="titulo" placeholder="Ex: Problema com acesso ao sistema" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Descrição:</label>
+                        <textarea id="descricao" placeholder="Descreva o problema detalhadamente..." required></textarea>
+                    </div>
+                </div>
+                <button type="submit">Registrar Chamado (Simulação)</button>
+            </form>
+        </section>
+
+        <!-- Seção: Lista de Chamados -->
+        <section id="section-lista" class="hidden">
+            <h2>Chamados Registrados</h2>
+            <div id="lista-vazia" class="hidden" style="text-align: center; padding: 40px; color: #888;">
+                Nenhum chamado registrado nesta sessão.
+            </div>
+            <div id="container-chamados">
+                <!-- Chamados aparecerão aqui -->
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simulação de banco de dados em memória (SessionStorage)
+        let chamados = JSON.parse(sessionStorage.getItem('demo_chamados')) || [
+            {
+                id: 101,
+                titulo: "Exemplo: Ajuste de permissões",
+                nome: "Sistema",
+                departamento: "Acessos",
+                prioridade: "Média",
+                status: "Aberto",
+                data: new Date().toLocaleString()
+            }
+        ];
+
+        function showSection(section) {
+            document.getElementById('section-novo').classList.toggle('hidden', section !== 'novo');
+            document.getElementById('section-lista').classList.toggle('hidden', section !== 'lista');
+            document.getElementById('nav-novo').classList.toggle('active', section === 'novo');
+            document.getElementById('nav-lista').classList.toggle('active', section === 'lista');
+            if (section === 'lista') renderChamados();
+        }
+
+        function renderChamados() {
+            const container = document.getElementById('container-chamados');
+            const vazia = document.getElementById('lista-vazia');
+            container.innerHTML = '';
+            
+            if (chamados.length === 0) {
+                vazia.classList.remove('hidden');
+                return;
+            }
+            vazia.classList.add('hidden');
+
+            chamados.slice().reverse().forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'chamado-card';
+                card.style.borderLeftColor = c.prioridade === 'Alta' ? 'var(--priority-high-color)' : (c.prioridade === 'Média' ? 'var(--priority-medium-color)' : 'var(--priority-low-color)');
+                
+                let statusClass = 'status-aberto';
+                if(c.status === 'Em Andamento') statusClass = 'status-andamento';
+                if(c.status === 'Fechado') statusClass = 'status-fechado';
+
+                card.innerHTML = `
+                    <div class="card-header">
+                        <strong>#${c.id} - ${c.titulo}</strong>
+                        <span class="status-badge ${statusClass}">${c.status}</span>
+                    </div>
+                    <p style="font-size: 0.85em; color: #666;"><strong>De:</strong> ${c.nome} | <strong>Setor:</strong> ${c.departamento}</p>
+                    <p style="font-size: 0.85em; color: #666;"><strong>Data:</strong> ${c.data}</p>
+                    <p style="margin-top: 10px; font-size: 0.9em;">${c.descricao || 'Sem descrição.'}</p>
+                    ${c.status === 'Aberto' ? `<button onclick="assumir(${c.id})" style="margin-top: 10px; padding: 5px; font-size: 0.8em; background: #6c757d;">Assumir (Simular Admin)</button>` : ''}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function assumir(id) {
+            const index = chamados.findIndex(c => c.id === id);
+            if (index !== -1) {
+                chamados[index].status = 'Em Andamento';
+                sessionStorage.setItem('demo_chamados', JSON.stringify(chamados));
+                renderChamados();
+                alert('Você assumiu este chamado como Administrador!');
+            }
+        }
+
+        document.getElementById('demo-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const novo = {
+                id: Math.floor(Math.random() * 900) + 100,
+                titulo: document.getElementById('titulo').value,
+                nome: document.getElementById('nome').value,
+                departamento: document.getElementById('departamento').value,
+                prioridade: document.getElementById('prioridade').value,
+                descricao: document.getElementById('descricao').value,
+                status: "Aberto",
+                data: new Date().toLocaleString()
+            };
+            
+            chamados.push(novo);
+            sessionStorage.setItem('demo_chamados', JSON.stringify(chamados));
+            alert('Chamado registrado com sucesso na simulação!');
+            this.reset();
+            showSection('lista');
+        });
+    </script>
+</body>
+</html>
